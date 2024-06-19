@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SessionCode < ApplicationRecord
+  LENGTH = 6
   EXPIRE_AFTER = 1.day.freeze
 
   belongs_to :user
