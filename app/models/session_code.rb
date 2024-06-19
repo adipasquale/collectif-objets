@@ -26,6 +26,10 @@ class SessionCode < ApplicationRecord
 
   delegate :random_code, to: :class
 
+  scope :used, -> { where.not(used_at: nil) }
+  scope :unused, -> { where(used_at: nil) }
+  scope :valid, -> { unused.where(created_at: EXPIRE_AFTER.ago..) }
+
   before_create :generate_code
 
   delegate :random_code, to: :class
