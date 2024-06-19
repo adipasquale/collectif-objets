@@ -16,6 +16,10 @@ class SessionCode < ApplicationRecord
 
   delegate :random_code, to: :class
 
+  before_create :generate_code
+
+  delegate :random_code, to: :class
+
   def self.random_code
     rand((10.pow(LENGTH - 1))...(10.pow(LENGTH))).to_s
   end
