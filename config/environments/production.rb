@@ -91,7 +91,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.force_ssl = true
-  config.ssl_options = { hsts: { preload: true } }
+  config.ssl_options = { hsts: { preload: true, expires: 1.year } }
   config.x.environment_specific_name = ENV["HOST"] =~ /staging/ ? "staging" : "production"
   config.x.inbound_emails_domain = "reponse.collectifobjets.org"
 

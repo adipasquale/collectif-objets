@@ -895,9 +895,8 @@ Avec le fichier suivant
 ## Configurations des CSP Content Security Policy
 
 Toute la configuration se trouve dans `config/initializers/content_security_policy.rb`.
-Actuellement les règles ne sont pas appliquées, elles sont encore en "report-only" c’est à dire qu’en cas d’infraction, les navigateurs ne vont pas empêcher la ressource de se charger, mais simplement envoyer l’information à Sentry.
 
-Les ressources problématiques peuvent [être filtrées sur Sentry avec `event.type:csp`](https://sentry.incubateur.net/organizations/betagouv/issues/?query=is%3Aunresolved+event.type%3Acsp&referrer=search-bar&sort=date).
+Les alertes liées à la CSP peuvent [être filtrées sur Sentry avec `event.type:csp`](https://sentry.incubateur.net/organizations/betagouv/issues/?query=is%3Aunresolved+event.type%3Acsp&referrer=search-bar&sort=date).
 Lorsque de nouvelles apparaissent il convient de s’assurer qu’elles proviennent bien de notre code :
 
 - vérifier que le `source_file` de l’évènement n’indique pas quelque chose de suspect comme une extension navigateur
@@ -910,5 +909,6 @@ Pour débugger les CSPs en local, il peut être utile de désactiver vite dev da
 
 💡 La règle d’or est de tout faire pour ne jamais avoir à rajouter de règle `unsafe inline` pour le style ou pour les scripts.
 L’intérêt est en effet que les CSP protègent les usagers d’injections de code.
+C'est malheureusement nécessaire pour la prévisualisation des emails, mais :unsafe_inline est autorisé uniquement pour les actions concernées (il est possible de modifier les CSP à la volée par action ou par contrôleur).
 
 

@@ -10,7 +10,7 @@ Rails.application.configure do
       policy.report_uri "https://sentry.incubateur.net/api/40/security/?sentry_key=5f6f9cf638ac413b82d1d9c8a9ba2025"
     end
 
-    policy.default_src :self, :https
+    policy.default_src :none
     policy.script_src :self, "https://stats.beta.gouv.fr/"
     policy.base_uri :self
     policy.form_action :self
@@ -37,7 +37,7 @@ Rails.application.configure do
     policy.child_src :blob # cf https://maplibre.org/maplibre-gl-js-docs/api/#csp-directives
     policy.worker_src :blob # cf https://maplibre.org/maplibre-gl-js-docs/api/#csp-directives
 
-    policy.style_src :self, :https
+    policy.style_src :self
 
     policy.frame_ancestors :none
     policy.frame_src :self, # for the PDFs served by the rails server through <embed> cf https://stackoverflow.com/a/69147536

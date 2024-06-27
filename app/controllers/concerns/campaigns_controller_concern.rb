@@ -12,7 +12,7 @@ module CampaignsControllerConcern
     before_action :redirect_planned_campaign, only: %i[edit_recipients]
 
     # Temporarily allow inline styles when previewing emails
-    content_security_policy { |policy| policy.style_src :self, :https, :unsafe_inline }
+    content_security_policy { |policy| policy.style_src :self, :unsafe_inline }
   end
 
   def show; end
