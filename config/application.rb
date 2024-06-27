@@ -36,6 +36,8 @@ module CollectifObjets
 
     config.autoload_lib(ignore: %w[assets tasks])
 
+    config.action_dispatch.cookies_same_site_protection = :strict
+
     config.action_mailer.preview_paths << Rails.root.join("lib/mailer_previews")
 
     config.active_job.queue_adapter = :good_job

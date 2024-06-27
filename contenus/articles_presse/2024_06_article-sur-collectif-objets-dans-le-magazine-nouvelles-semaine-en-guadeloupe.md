@@ -1,5 +1,5 @@
 ---
-titre: Article sur Collectif Objets dans le magazine Nouvelles Semaine en Guadeloupe
+titre: Article dans le magazine Nouvelles Semaine en Guadeloupe
 source: Nouvelles Semaine
 date: 12 avril 2024
 logo: /contenus/articles_presse/images/nouvelles-semaine.jpeg

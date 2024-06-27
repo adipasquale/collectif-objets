@@ -11,7 +11,9 @@ Rails.application.configure do
     end
 
     policy.default_src :self, :https
-    policy.script_src  :self, :https
+    policy.script_src :self, "https://stats.beta.gouv.fr/"
+    policy.base_uri :self
+    policy.form_action :self
     policy.img_src \
       :self,
       :data,
@@ -28,15 +30,16 @@ Rails.application.configure do
       "https://stats.beta.gouv.fr",
       "https://openmaptiles.geo.data.gouv.fr",
       *s3_uris2,
-      *(Rails.env.development? ? ["ws://#{ ViteRuby.config.host_with_port }"] : [])
+      *(Rails.env.development? ? [:ws, :http].map { |protocol| "#{protocol}://#{ViteRuby.config.host_with_port}" } : [])
 
     policy.object_src :self # for the PDFs served by the rails server
-    policy.font_src :self, :https, :data
+    policy.font_src :self
     policy.child_src :blob # cf https://maplibre.org/maplibre-gl-js-docs/api/#csp-directives
     policy.worker_src :blob # cf https://maplibre.org/maplibre-gl-js-docs/api/#csp-directives
 
     policy.style_src :self, :https
 
+    policy.frame_ancestors :none
     policy.frame_src :self, # for the PDFs served by the rails server through <embed> cf https://stackoverflow.com/a/69147536
       "https://collectif-objets-metabase.osc-secnum-fr1.scalingo.io/",
       "https://tube.numerique.gouv.fr/"
