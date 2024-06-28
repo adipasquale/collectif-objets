@@ -6,8 +6,6 @@ module Communes
     before_action :set_recensement, only: %i[edit update destroy]
     before_action :set_wizard, only: %i[edit update]
 
-    content_security_policy(only: :edit) { |policy| policy.style_src :self, :unsafe_inline }
-
     def edit
       @modal = params[:modal]
     end

@@ -9,9 +9,8 @@ Rails.application.configure do
     if Rails.configuration.x.environment_specific_name == "production"
       policy.report_uri "https://sentry.incubateur.net/api/40/security/?sentry_key=5f6f9cf638ac413b82d1d9c8a9ba2025"
     end
-
-    policy.default_src :none
-    policy.script_src :self, "https://stats.beta.gouv.fr/"
+    policy.default_src :self, :https
+    policy.script_src  :self, :https, "https://stats.beta.gouv.fr/"
     policy.base_uri :self
     policy.form_action :self
     policy.img_src \
@@ -30,19 +29,19 @@ Rails.application.configure do
       "https://stats.beta.gouv.fr",
       "https://openmaptiles.geo.data.gouv.fr",
       *s3_uris2,
-      *(Rails.env.development? ? [:ws, :http].map { |protocol| "#{protocol}://#{ViteRuby.config.host_with_port}" } : [])
+      *(Rails.env.development? ? ["ws://#{ ViteRuby.config.host_with_port }"] : [])
 
     policy.object_src :self # for the PDFs served by the rails server
-    policy.font_src :self
+    policy.font_src :self, :https, :data
     policy.child_src :blob # cf https://maplibre.org/maplibre-gl-js-docs/api/#csp-directives
     policy.worker_src :blob # cf https://maplibre.org/maplibre-gl-js-docs/api/#csp-directives
 
     policy.style_src :self
 
-    policy.frame_ancestors :none
     policy.frame_src :self, # for the PDFs served by the rails server through <embed> cf https://stackoverflow.com/a/69147536
       "https://collectif-objets-metabase.osc-secnum-fr1.scalingo.io/",
-      "https://tube.numerique.gouv.fr/"
+      "https://tube.numerique.gouv.fr/",
+      "https://www.loom.com/" # to remove, once the loom video is transferred to peertube
   end
 
   # Generate session nonces for permitted importmap and inline scripts

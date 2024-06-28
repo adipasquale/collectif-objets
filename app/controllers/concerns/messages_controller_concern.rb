@@ -3,10 +3,6 @@
 module MessagesControllerConcern
   extend ActiveSupport::Concern
 
-  included do
-    content_security_policy(only: :create) { |policy| policy.style_src :self, :unsafe_inline }
-  end
-
   def index
     @new_message = Message.new(commune: @commune)
   end

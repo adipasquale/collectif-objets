@@ -95,9 +95,6 @@ Rails.application.configure do
   config.x.environment_specific_name = ENV["HOST"] =~ /staging/ ? "staging" : "production"
   config.x.inbound_emails_domain = "reponse.collectifobjets.org"
 
-  config.session_store :cookie_store,
-                       key: "__Host-#{Rails.application.class.module_parent.name.underscore}-#{Rails.env}"
-
   if config.x.environment_specific_name == "staging"
     config.action_mailer.show_previews = true
     config.active_storage.service = :scaleway_staging
