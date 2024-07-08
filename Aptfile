@@ -1,1 +1,3 @@
-libvips
+# libvips installs an old version, incompatible with .jfif
+# libvips=8.15.1 fails to find the package (Version '8.15.1' for 'libvips' was not found)
+http://archive.ubuntu.com/ubuntu/pool/universe/v/vips/libvips-dev_8.15.1-1.1build4_amd64.deb
