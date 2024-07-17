@@ -17,26 +17,6 @@ class SessionCode < ApplicationRecord
 
   delegate :random_code, to: :class
 
-  scope :used, -> { where.not(used_at: nil) }
-  scope :unused, -> { where(used_at: nil) }
-  scope :valid, -> { unused.where(created_at: EXPIRE_AFTER.ago..) }
-  scope :expired, -> { where(created_at: ..EXPIRE_AFTER.ago) }
-  scope :outdated, -> { where(created_at: ..1.month.ago) }
-
-  before_create :generate_code
-
-  delegate :random_code, to: :class
-
-  scope :used, -> { where.not(used_at: nil) }
-  scope :unused, -> { where(used_at: nil) }
-  scope :valid, -> { unused.where(created_at: EXPIRE_AFTER.ago..) }
-  scope :expired, -> { where(created_at: ..EXPIRE_AFTER.ago) }
-  scope :outdated, -> { where(created_at: ..1.month.ago) }
-
-  before_create :generate_code
-
-  delegate :random_code, to: :class
-
   def self.random_code
     rand((10.pow(LENGTH - 1))...(10.pow(LENGTH))).to_s
   end
