@@ -107,7 +107,6 @@ module Exports
           objet.palissy_REF,
           objet.departement.nom,
           objet.lieu_actuel_code_insee,
-          objet.recensement.notes,
           objet.recensement.dossier.notes_commune,
           objet.recensement.dossier.notes_conservateur,
           objet.recensement.notes,
