@@ -13,18 +13,7 @@ module Conservateurs
       @edifice = Edifice.find(params[:edifice])
       raise unless @edifice.commune == @dossier.commune
 
-      @edifice.bordereau&.purge
-
-      GenerateBordereauPdfJob.perform_later(@dossier.id, @edifice.id)
-      @edifice.update!(bordereau_generation_enqueued_at: Time.zone.now)
-
-      respond_to do |format|
-        format.html do
-          redirect_to conservateurs_commune_bordereaux_path(@commune),
-                      notice: "Le bordereau est en cours de génération …"
-        end
-        format.turbo_stream
-      end
+      @edifice.generate_bordereau!(@dossier)
     end
 
     protected

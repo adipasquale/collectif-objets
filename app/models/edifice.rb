@@ -48,4 +48,10 @@ class Edifice < ApplicationRecord
   def to_s
     "Édifice #{nom} #{merimee_REF ? "(#{merimee_REF})" : '(sans référence Mérimée)'} - commune #{code_insee}"
   end
+
+  def generate_bordereau!(dossier)
+    pdf = Bordereau::Pdf.new(dossier, self)
+    bordereau.purge if bordereau.attached?
+    bordereau.attach io: pdf.to_io, filename: pdf.filename, content_type: Mime[:pdf]
+  end
 end

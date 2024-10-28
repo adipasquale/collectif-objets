@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_09_173758) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_28_100856) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
@@ -212,7 +212,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_09_173758) do
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "bordereau_generation_enqueued_at"
     t.index ["code_insee"], name: "index_edifices_on_code_insee"
     t.index ["merimee_REF"], name: "index_edifices_on_merimee_REF"
   end
