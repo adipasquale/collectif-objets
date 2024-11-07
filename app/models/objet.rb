@@ -41,18 +41,18 @@ class Objet < ApplicationRecord
                      }
   scope :examinés, -> { joins(recensement: :dossier).merge(Dossier.accepted) }
 
-  MIS_DE_COTE_SQL = %("palissy_PROT" LIKE 'déclassé au titre objet'
-                      OR "palissy_PROT" LIKE 'désinscrit'
-                      OR "palissy_PROT" LIKE '%non protégé%'
-                      OR "palissy_PROT" LIKE 'sans protection'
-                    )
+  MIS_DE_COTE_SQL = %("palissy_PROT" IN ('déclassé au titre objet', 'désinscrit', 'sans protection')
+                       OR "palissy_PROT" LIKE '%non protégé%').squish
   scope :classés, -> { where(%("palissy_PROT" ILIKE '%classé%')).where.not(MIS_DE_COTE_SQL) }
   scope :inscrits, lambda {
                      where(%("palissy_PROT" ILIKE '%inscr%'))
                      .where.not(%("palissy_PROT" ILIKE '%classé%'))
                      .where.not(MIS_DE_COTE_SQL)
                    }
-  scope :protégés, -> { classés.or(inscrits) }
+  scope :protégés, lambda {
+                     where(%("palissy_PROT" ILIKE '%classé%' OR "palissy_PROT" ILIKE '%inscr%'))
+                     .where.not(MIS_DE_COTE_SQL)
+                   }
   scope :code_insee_a_changé, -> { where.not(palissy_WEB: nil).where.not(palissy_DEPL: nil) }
   scope :déplacés, -> { joins(:recensement).merge(Recensement.déplacés) }
   scope :manquants, -> { joins(:recensement).merge(Recensement.absent) }
