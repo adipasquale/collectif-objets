@@ -3,6 +3,12 @@
 class MattermostApiError < StandardError; end
 
 class SendMattermostNotificationJob < ApplicationJob
+  # The extension must be included before other extensions
+  include GoodJob::ActiveJobExtensions::InterruptErrors
+  # Discard the job if it is interrupted
+  # This avoids having jobs that are in the Running queue indefinitely
+  discard_on GoodJob::InterruptError
+
   HOOKS_URL = "https://mattermost.incubateur.net/hooks/#{Rails.application.credentials.mattermost&.hook_id}".freeze
   HANDLED_EVENTS = %w[commune_completed recensement_created dossier_auto_submitted message_created].freeze
 
