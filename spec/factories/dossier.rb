@@ -13,6 +13,10 @@ FactoryBot.define do
       recensements { [association(:recensement_examiné)] }
     end
 
+    trait :with_conservateur do
+      conservateur
+    end
+
     trait :submitted do
       status { :submitted }
       notes_commune { "Voici les recensements demandés" }

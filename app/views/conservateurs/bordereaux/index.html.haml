@@ -4,18 +4,20 @@
   - if @dossier&.accepted?
     = dsfr_alert(type: :info, size: :sm, classes: ["fr-mb-4w"]) do
       %p
-        Vous pouvez générer des bordereaux de récolement pour les différents édifices de la commune.
+        Vous pouvez générer des bordereaux de récolement pour les édifices de la commune contenant des objets protégés.
+        %br
         Les champs seront préremplis avec les données de recensement que vous avez précédemment examinées et acceptées.
         %br
         En cas d’erreur pour les édifices, veuillez nous envoyer un mail à l’adresse : #{CONTACT_EMAIL}.
 
-    - if @edifices.load.empty?
+    - if @bordereaux.empty?
       %p
         %span.fr-icon-warning-line(aria-hidden="true")
         Il n’y a aucun objet classé ou inscrit dans cette commune.
 
     - else
-      = render partial: "conservateurs/bordereaux/edifice", collection: @edifices
+      .fr-accordions-group
+        = render partial: "conservateurs/bordereaux/bordereau", collection: @bordereaux, locals: { commune: @commune }
   - else
     .co-readable
       %p

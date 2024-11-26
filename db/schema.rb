@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_28_100856) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_28_154819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
@@ -69,6 +69,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_28_100856) do
     t.string "last_name", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "bordereau_recensements", force: :cascade do |t|
+    t.bigint "bordereau_id", null: false
+    t.bigint "recensement_id", null: false
+    t.string "notes_commune"
+    t.string "notes_conservateur"
+    t.string "notes_affectataire"
+    t.string "notes_proprietaire"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bordereau_id", "recensement_id"], name: "idx_on_bordereau_id_recensement_id_205ed59768", unique: true
+    t.index ["bordereau_id"], name: "index_bordereau_recensements_on_bordereau_id"
+    t.index ["recensement_id"], name: "index_bordereau_recensements_on_recensement_id"
+  end
+
+  create_table "bordereaux", force: :cascade do |t|
+    t.bigint "dossier_id", null: false
+    t.bigint "edifice_id"
+    t.string "edifice_nom", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dossier_id"], name: "index_bordereaux_on_dossier_id"
+    t.index ["edifice_id"], name: "index_bordereaux_on_edifice_id"
   end
 
   create_table "campaign_emails", force: :cascade do |t|
@@ -435,6 +459,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_28_100856) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bordereau_recensements", "bordereaux"
+  add_foreign_key "bordereau_recensements", "recensements"
+  add_foreign_key "bordereaux", "dossiers"
   add_foreign_key "dossiers", "campaigns"
   add_foreign_key "dossiers", "communes"
   add_foreign_key "messages", "communes"

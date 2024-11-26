@@ -17,6 +17,8 @@ class Recensement < ApplicationRecord
   has_one :nouvelle_commune, class_name: "Commune", dependent: nil, inverse_of: false,
                              foreign_key: :code_insee, primary_key: :autre_commune_code_insee
 
+  has_many :bordereau_recensements, dependent: :destroy, inverse_of: :recensement
+
   delegate :commune, to: :objet, allow_nil: true
   delegate :departement, to: :objet, allow_nil: true
   delegate :departement, to: :nouvelle_commune, allow_nil: true, prefix: :nouveau
