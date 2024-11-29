@@ -58,19 +58,19 @@
                 .fr-input-group
                   = ff.label :notes_commune do
                     Notes commune
-                  = ff.text_area :notes_commune
+                  = ff.text_area :notes_commune, data: { controller: "autogrow", action: "autogrow#resize" }
                 .fr-input-group
                   = ff.label :notes_conservateur do
                     Notes conservateur
-                  = ff.text_area :notes_conservateur
+                  = ff.text_area :notes_conservateur, data: { controller: "autogrow", action: "autogrow#resize" }
                 .fr-input-group
                   = ff.label :notes_affectataire do
                     Notes affectataire
-                  = ff.text_area :notes_affectataire
+                  = ff.text_area :notes_affectataire, data: { controller: "autogrow", action: "autogrow#resize" }
                 .fr-input-group
                   = ff.label :notes_proprietaire do
                     Notes propriétaire
-                  = ff.text_area :notes_proprietaire
+                  = ff.text_area :notes_proprietaire, data: { controller: "autogrow", action: "autogrow#resize" }
       = f.button "Enregistrer et générer le bordereau",
           class: "fr-btn fr-btn--sm fr-btn--secondary fr-btn--icon-left fr-icon-checkbox-circle-line",
           data: { turbo_submits_with: "Enregistrement et génération en cours…" },
