@@ -72,12 +72,13 @@ class CreateBordereauxAndBordereauxRecensements < ActiveRecord::Migration[7.1]
 
     statements = data.map { |bordereau_id, edifice_id| "WHEN #{edifice_id} THEN #{bordereau_id}" }.join(" ")
     # Reattach bordereaux files stored as ActiveStorage::Attachments from edifice to bordereaux
-    ActiveStorage::Attachment.where(record_type: "Edifice", name: :bordereau)
+    ActiveStorage::Attachment.where(record_type: "Edifice", name: :bordereau, record_id: data.to_h.values)
       .update_all(<<-SQL)
         name = 'file',
         record_type = 'Bordereau',
         record_id = CASE record_id #{statements} END
       SQL
+    ActiveStorage::Attachment.where(record_type: "Edifice", name: :bordereau).destroy_all
   end
 
   def reattach_active_storage_to_edifices
