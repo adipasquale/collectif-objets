@@ -1,3 +1,9 @@
-<%= turbo_stream.replace "bordereau-#{@edifice.id}" do %>
-  <%= render "conservateurs/bordereaux/edifice", edifice: @edifice %>
+<% bordereau_dom_id = "bordereau_#{@bordereau.edifice_id}" %>
+<%= turbo_stream.replace bordereau_dom_id do %>
+  <%= render "bordereau", bordereau: @bordereau, commune: @commune, expanded: true %>
+  <template
+    data-controller="accordion-open grab-focus"
+    data-accordion-open-selector-value="<%= bordereau_dom_id %>-panel"
+    data-grab-focus-selector-value="#<%= bordereau_dom_id %>-btn"
+    ></template>
 <% end %>

@@ -1,0 +1,77 @@
+-# locals: bordereau:, commune:
+
+- icon = bordereau.new_record? ? "fr-icon-question-line" : "fr-icon-checkbox-fill"
+- state = bordereau.new_record? ? "À examiner" : "Généré"
+- objets_count = Objet.human_attribute_name(:proteges_count, count: bordereau.bordereau_recensements.load.size)
+- id = "bordereau_#{bordereau.edifice_id}"
+
+%section.fr-accordion{ id: id }
+  %h3.fr-accordion__title
+    %button.fr-accordion__btn{
+      id: "#{id}-btn",
+      "aria-controls": "#{id}-panel",
+      "aria-expanded": "false" }
+      %span{ class: "#{icon} fr-mr-1v", "aria-hidden": "true", title: state }
+      %span.fr-sr-only= state
+      = "#{bordereau.nom_edifice} · #{objets_count}"
+  .fr-collapse{ id: "#{id}-panel" }
+    - if bordereau.new_record?
+      = button_to "Générer le bordereau",
+        conservateurs_commune_bordereaux_path(commune, edifice_id: bordereau.edifice_id),
+        method: :post,
+        data: { turbo_submits_with: "Génération en cours…" },
+        class: "fr-btn fr-btn--sm fr-btn--secondary fr-btn--icon-left fr-icon-file-add-line fr-mb-2w",
+        title: "Générer le bordereau de #{bordereau.nom_edifice}"
+    - else
+      - size = number_to_human_size(bordereau.file.byte_size)
+      = link_to "Télécharger le bordereau (PDF de #{size})",
+        rails_blob_path(bordereau.file, disposition: "attachment"),
+        class: "fr-btn fr-btn--sm fr-btn--primary fr-btn--icon-left fr-icon-download-line fr-mb-2w",
+        title: "Bordereau de récolement · #{bordereau.nom_edifice} #{commune.nom} (PDF de #{size})"
+
+    = form_for bordereau, url: conservateurs_commune_bordereaux_path(commune, edifice_id: bordereau.edifice_id), method: :post, builder: FormBuilderDsfr, data: { controller: :form, action: "keydown->form#controlSubmit" } do |f|
+      = f.fields_for :bordereau_recensements, include_id: false do |ff|
+        - bordereau_recensement = ff.object
+        = ff.hidden_field :recensement_id
+        - if ff.index.positive?
+          %hr
+        %fieldset.fr-fieldset
+          %legend.fr-fieldset__legend= ff.object.nom
+          .fr-fieldset__element
+            .fr-grid-row.fr-grid-row--gutters
+              .fr.col-12.fr-col-md-4
+                %p
+                  %strong= bordereau_recensement.palissy_REF
+                - if bordereau_recensement.catégorie
+                  %p
+                    %strong Catégorie :
+                    = bordereau_recensement.catégorie
+                - if bordereau_recensement.époque
+                  %p
+                    %strong Époque :
+                    = bordereau_recensement.époque
+                %p
+                  %strong État sanitaire :
+                  = bordereau_recensement.etat_sanitaire
+                = vite_or_raw_image_tag(bordereau_recensement.photo, class: "fr-responsive-img co-object-fit-contain", alt: "") if bordereau_recensement.photo
+              .fr.col-12.fr-col-md-8
+                .fr-input-group
+                  = ff.label :notes_commune do
+                    Notes commune
+                  = ff.text_area :notes_commune, data: { controller: "autogrow", action: "autogrow#resize" }
+                .fr-input-group
+                  = ff.label :notes_conservateur do
+                    Notes conservateur
+                  = ff.text_area :notes_conservateur, data: { controller: "autogrow", action: "autogrow#resize" }
+                .fr-input-group
+                  = ff.label :notes_affectataire do
+                    Notes affectataire
+                  = ff.text_area :notes_affectataire, data: { controller: "autogrow", action: "autogrow#resize" }
+                .fr-input-group
+                  = ff.label :notes_proprietaire do
+                    Notes propriétaire
+                  = ff.text_area :notes_proprietaire, data: { controller: "autogrow", action: "autogrow#resize" }
+      = f.button "Enregistrer et générer le bordereau",
+          class: "fr-btn fr-btn--sm fr-btn--secondary fr-btn--icon-left fr-icon-checkbox-circle-line",
+          data: { turbo_submits_with: "Enregistrement et génération en cours…" },
+          title: "Enregistrer et générer le bordereau de #{bordereau.nom_edifice}"

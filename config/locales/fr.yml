@@ -339,6 +339,10 @@ fr:
           zero: aucun objet disparu
           one: 1 objet disparu
           other: "%{count} objets disparus"
+        proteges_count:
+          zero: aucun objet protégé
+          one: 1 objet protégé
+          other: "%{count} objets protégés"
   date:
     abbr_day_names:
       - dim

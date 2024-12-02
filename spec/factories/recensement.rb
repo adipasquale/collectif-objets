@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :recensement do
-    association :objet
     association :dossier
+    objet { association :objet, commune: dossier.commune }
     localisation { Recensement::LOCALISATION_EDIFICE_INITIAL }
     recensable { true }
     edifice_nom { nil }
@@ -87,6 +87,7 @@ FactoryBot.define do
     end
 
     trait :examiné do
+      association :dossier, :examiné
       analysed_at { 1.minute.ago }
       conservateur
     end

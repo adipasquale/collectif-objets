@@ -49,19 +49,5 @@ module Sanity
         AdminMailer.with(email: EMAIL, campaign:, text:).sanity_check_alert.deliver_later
       end
     end
-
-    def check_bordereaux_created
-      edifices_with_problems = Edifice
-        .where.missing(:bordereau_attachment)
-        .where("bordereau_generation_enqueued_at < ?", 5.minutes.ago)
-        .includes(:commune)
-
-      return if edifices_with_problems.empty?
-
-      text = "Les édifices suivants ont un bordereau en attente de génération depuis plus de 5 minutes : " \
-             "#{edifices_with_problems.pluck(:id).join(', ')}"
-      logger.info text
-      AdminMailer.with(email: EMAIL, text:).sanity_check_alert.deliver_later
-    end
   end
 end

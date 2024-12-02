@@ -3,7 +3,7 @@
 class Edifice < ApplicationRecord
   belongs_to :commune, foreign_key: :code_insee, primary_key: :code_insee, optional: true, inverse_of: :edifices
   has_many :objets, dependent: :nullify
-  has_one_attached :bordereau, dependent: :destroy
+  has_many :bordereaux, dependent: :nullify
 
   validates :code_insee, presence: true
   validates :merimee_REF, uniqueness: true, if: -> { merimee_REF.present? }
@@ -13,7 +13,7 @@ class Edifice < ApplicationRecord
   scope :with_objets_classés, -> { where.associated(:objets).merge(Objet.classés).group("edifices.id") }
   scope :with_objets_classés_ou_inscrits, lambda {
     where.associated(:objets)
-    .merge(Objet.classés.or(Objet.inscrits))
+    .merge(Objet.protégés)
     .group("edifices.id")
   }
   scope :ordered_by_nom, -> { order(Arel.sql("LOWER(UNACCENT(edifices.nom))")) }
@@ -47,5 +47,11 @@ class Edifice < ApplicationRecord
 
   def to_s
     "Édifice #{nom} #{merimee_REF ? "(#{merimee_REF})" : '(sans référence Mérimée)'} - commune #{code_insee}"
+  end
+
+  def generate_bordereau!(dossier)
+    pdf = Bordereau::Pdf.new(dossier, self)
+    bordereau.purge if bordereau.attached?
+    bordereau.attach io: pdf.to_io, filename: pdf.filename, content_type: Mime[:pdf]
   end
 end
