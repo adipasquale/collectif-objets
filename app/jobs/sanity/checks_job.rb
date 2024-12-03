@@ -8,7 +8,6 @@ module Sanity
       check_commune_started_dossier_construction
       check_commune_completed_dossier_submitted
       check_campaign_statuses_and_dates
-      check_bordereaux_created
     end
 
     protected
