@@ -11,8 +11,6 @@
 
 .fr-callout .co-callout-cta .fr-btn { margin-top: 0; }
 
-.co-copy-to-clipboard--active { color: blue; }
-
 .fr-btn--tertiary-no-outline {  /* this seems broken */ box-shadow: none; }
 
 .co-tabs--no-padding .fr-tabs__panel { padding: 0; }

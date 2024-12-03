@@ -3,17 +3,16 @@ import { debounce } from 'throttle-debounce';
 
 export default class extends Controller {
   static targets = [
-    "form",
     "input",
     "inputWrap",
     "results"
   ]
 
   initialize() {
-    this.debouncedSubmit = debounce(400, () => this.formTarget.requestSubmit()).bind(this)
+    this.debouncedSubmit = debounce(400, () => this.element.requestSubmit()).bind(this)
   }
 
-  performSearch() {
+  submit() {
     this.toggleSpinner(true)
     this.debouncedSubmit()
   }

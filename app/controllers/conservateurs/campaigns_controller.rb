@@ -13,9 +13,21 @@ module Conservateurs
 
     def new
       @departement = Departement.find(params[:departement_id])
-      @previous = @departement.campaigns.select(:sender_name, :nom_drac, :signature).last&.attributes || {}
-      @campaign = Campaign.new(@previous.merge(departement: @departement))
+      @campaign = Campaign.new(departement: @departement)
       authorize(@campaign)
+
+      defaults = @departement.campaigns.select(:sender_name, :nom_drac, :signature).last&.attributes
+      defaults ||= {
+        sender_name: current_conservateur.full_name,
+        nom_drac: @departement.region,
+        signature: [
+          current_conservateur.full_name,
+          nil,
+          "conservateur en charge des monuments historiques",
+          "DRAC #{@departement.region}"
+        ].join("\n")
+      }
+      @campaign.assign_attributes(defaults)
     end
 
     private

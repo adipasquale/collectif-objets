@@ -57,6 +57,8 @@ class Recensement < ApplicationRecord
   SECURISATION_MAUVAISE = "en_danger"
   SECURISATIONS = [SECURISATION_CORRECTE, SECURISATION_MAUVAISE].freeze
 
+  ALLOWED_PHOTO_EXTENSIONS = [".png", ".jpg", ".jpeg"].freeze
+
   validates :objet, presence: true, unless: -> { deleted? } # it is important not to use objet_id here
   validates :objet_id, uniqueness: { scope: :dossier_id }, unless: -> { deleted? }
 
@@ -75,6 +77,8 @@ class Recensement < ApplicationRecord
   validates :etat_sanitaire, inclusion: { in: [nil] }, if: -> { completed? && !recensable? }
   validates :securisation, inclusion: { in: [nil] }, if: -> { completed? && !recensable? }
   validates :photos, inclusion: { in: [] }, if: -> { completed? && !recensable? && photos.attached? }
+  validates :photos, size: { less_than: 10.megabytes }, if: -> { photos.attached? }
+  validate :photo_extensions, if: -> { photos.attached? }
 
   validates :conservateur_id, presence: true, if: -> { completed? && analysed? }
 
@@ -205,5 +209,11 @@ class Recensement < ApplicationRecord
     self.securisation = nil
     self.photos = []
     self.photos_count = 0
+  end
+
+  def photo_extensions
+    return if photos.all? { |photo| ALLOWED_PHOTO_EXTENSIONS.include? File.extname(photo.filename.to_s).downcase }
+
+    errors.add(:photos, :invalid)
   end
 end

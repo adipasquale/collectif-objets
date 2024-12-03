@@ -1,27 +1,25 @@
-#upload-form{"data-controller": "photo-upload-component",
-  "data-photo-upload-component-target": "wrapper",
-  "data-direct-upload-url": rails_direct_uploads_url
-}
-  = form_tag url, multipart: true, method: :post do |f|
-    .co-flex.co-flex--gap-1rem
-      %div
-        %input{name: "recensement[photos][]", type: "hidden", value: "", autocomplete: "off" }
-        %input{type: "file",
-          id: "recensement_photos",
-          name: "recensement[photos][]",
-          class: "fr-file-input",
-          autocomplete: "off",
-          value: "",
-          "data-photo-upload-component-target": "input",
-          "data-action": "change->photo-upload-component#triggerUpload"
-        }
-        .nanobar{"data-photo-upload-component-target": "nanobar"}
+= form_tag url, multipart: true, method: :post, id: "upload_form",
+  data: { controller: "photo-upload-component", photo_upload_component_url_value: rails_direct_uploads_url, photo_upload_component_accept_value: "png|jpg|jpeg", photo_upload_component_max_file_size_value: 1024*1024*10 } do |f|
+  .co-flex.co-flex--gap-1rem
+    .fr-upload-group{"data-photo-upload-component-target": :group}
+      %input{name: "recensement[photos][]", type: :hidden, value: "", autocomplete: :off }
+      %input{type: :file,
+        id: "recensement_photos",
+        name: "recensement[photos][]",
+        class: "fr-file-input",
+        autocomplete: :off,
+        value: "",
+        "aria-describedby": "display",
+        "data-photo-upload-component-target": :input,
+        "data-action": "change->photo-upload-component#triggerUpload"
+      }
+      .nanobar{"data-photo-upload-component-target": "nanobar"}
 
-      %div
-        %input{type: "submit",
-          value: "Ajouter cette photo",
-          class: "fr-btn fr-btn--secondary",
-          "data-photo-upload-component-target": "submit"
-        }
-    .fr-mt-1w{"data-photo-upload-component-target": "progressText"}
-      &nbsp;
+    %div
+      %input{type: :submit,
+        value: "Ajouter cette photo",
+        class: "fr-btn fr-btn--secondary",
+        "data-photo-upload-component-target": :submit
+      }
+  #display.fr-mt-1w{"data-photo-upload-component-target": "display"}
+    &nbsp;

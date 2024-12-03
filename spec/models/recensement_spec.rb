@@ -70,6 +70,21 @@ RSpec.describe Recensement, type: :model do
       end
     end
 
+    context "recensable" do
+      context "when attaching a .jfif" do
+        let(:recensement) { build(:recensement, :with_photo, photo_files: ["peinture1.jfif"], recensable: true) }
+        it { should eq false }
+      end
+      context "when attaching a .zip" do
+        let(:recensement) { build(:recensement, :with_photo, photo_files: ["archive.zip"], recensable: true) }
+        it { should eq false }
+      end
+      context "when attaching a .pdf" do
+        let(:recensement) { build(:recensement, :with_photo, photo_files: ["document.pdf"], recensable: true) }
+        it { should eq false }
+      end
+    end
+
     context "non recensable" do
       let(:attributes) { { recensable: false, etat_sanitaire: nil, securisation: nil } }
 

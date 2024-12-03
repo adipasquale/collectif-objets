@@ -48,10 +48,9 @@
       = render partial: 'shared/pagy_nav', locals: {pagy: @pagy}
 
     %h2.fr-mt-4w Calendrier des campagnes
-    %p{"data-controller": "copy-to-clipboard"}
+    %p
       = link_to campaigns_ics_url, campaigns_ics_path
-      %input{type: :hidden, "data-copy-to-clipboard-target": "content", "data-value": campaigns_ics_url}
-      = button_tag("Copier", class: "fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-todo-line", "data-action": "copy-to-clipboard#copy", "data-copy-to-clipboard-target": "button")
+      = button_tag("Copier", type: :button, class: "fr-btn fr-btn-sm fr-btn--secondary fr-btn--icon-left fr-icon-todo-line fr-ml-1w", data: { controller: :clipboard, action: "clipboard#copy", "clipboard-value": campaigns_ics_url })
 
     %p
       :markdown

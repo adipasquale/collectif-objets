@@ -5,8 +5,8 @@ export default class extends Controller {
 
   set(event) {
     const source = event.target
-    const index = this.targets.indexOf(source)
-    const input = this.targets[index + 1]
+    const index = this.inputs.indexOf(source)
+    const input = this.inputs[index + 1]
     if (!input) return
 
     input.value = this.addDays(new Date(source.value), 14)
@@ -19,7 +19,7 @@ export default class extends Controller {
     return newDate.toISOString().substring(0, 10)
   }
 
-  get targets() {
-    return Array(...this.element.querySelectorAll("input[type=date]"))
+  get inputs() {
+    return Array(...this.inputTargets)
   }
 }

@@ -18,7 +18,7 @@ module Communes
               locals: { recensement: @recensement, photo: @recensement.photos.last, delete_button: true }
             ),
             turbo_stream.replace(
-              "upload-form",
+              "upload_form",
               PhotoUploadComponent
                 .new(url: commune_objet_recensement_photos_path(@recensement.commune, @recensement.objet, @recensement))
                 .render_in(view_context)

@@ -1,10 +1,9 @@
 = form_with url: autocomplete_conservateurs_communes_path, id: "header-search-form",
-  data: { controller: "header-search", "header-search-target" => "form",
-    action: "turbo:submit-end->header-search#hideSpinner" } do |f|
+  data: { controller: :search, action: "turbo:submit-end->search#hideSpinner" } do |f|
   .fr-search-bar
     = f.label :nom, "Rechercher une commune", class: "fr-label"
-    .fr-input-wrap.co-header-search-input-wrap(data-header-search-target="inputWrap")
-      = f.text_field :nom, placeholder: "Rechercher une commune", autocomplete: "off", class: "fr-input",
-        data: {"header-search-target" => "input", action: "input->header-search#performSearch"}
+    .fr-input-wrap.co-header-search-input-wrap(data-search-target="inputWrap")
+      = f.text_field :nom, placeholder: "Rechercher une commune", autocomplete: :off, class: "fr-input",
+        data: { "search-target" => :input, action: "input->search#submit" }
     = f.button value: "Rechercher", class: "fr-btn"
 #js-header-search-results(data-header-search-target="results")

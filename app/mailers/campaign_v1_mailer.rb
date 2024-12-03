@@ -5,8 +5,10 @@ class CampaignV1Mailer < ApplicationMailer
   before_action :set_campaign_commune_and_user
   default \
     to: -> { @user.email },
-    from: -> { email_address_with_name(CONTACT_EMAIL, @campaign.sender_name) },
-    reply_to: -> { @commune.support_email(role: :user) }
+    from: -> {
+            email_address_with_name(@commune.support_email(role: :user),
+                                    "#{@campaign.sender_name} via Collectif Objets")
+          }
 
   MAIL_NAMES = (
     %w[lancement] +

@@ -51,7 +51,7 @@
       %li
         = button_to "Modifier la configuration", send("edit_#{r}_campaign_path", campaign), class: "fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-pencil-line", method: :get, disabled: !campaign.draft?
       %li
-        = button_to "Prévisualiser les messages", send("#{r}_campaign_mail_previews_path", campaign), method: :get, class: "fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-eye-line fr-my-1w fr-mt-md-0", disabled: campaign.communes.empty? || !campaign.draft_or_planned?
+        = button_to "Prévisualiser les messages", send("#{r}_campaign_mail_previews_path", campaign), method: :get, class: "fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-eye-line fr-my-1w fr-mt-md-0", disabled: campaign.communes.empty?
 
   .fr-col-lg-6
     %h2 Dates

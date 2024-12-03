@@ -55,7 +55,7 @@ group :development do
   gem "foreman", "~> 0.87"
   gem "html2haml", "~> 2.3"
   gem "htmlbeautifier", "~> 1.4"
-  gem "pry", "~> 0.14"
+  gem "pry", "~> 0.15"
   gem "rails-erd", "~> 1.7", require: false
   gem "solargraph", "~> 0.50"
   gem "web-console", "~> 4.2"
@@ -66,6 +66,6 @@ group :test do
   gem "axe-core-rspec", "~> 4.8"
   gem "capybara", "~> 3.39"
   gem "rspec-sqlimit", "~> 0.0.6"
-  gem "selenium-webdriver", "~> 4.21"
+  gem "selenium-webdriver", "~> 4.27"
   gem "webmock", "~> 3.23"
 end

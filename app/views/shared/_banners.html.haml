@@ -1,6 +1,6 @@
 - if banners.any?
   .co-background-color-inherit.co-position-sticky.co-top-0.co-z-index-600.co-print-hide.fr-text--sm{role: "alert",
-    data: { controller: "visibility-toggle", "visibility-toggle-target": "section" }}
+    data: { controller: :visibility }}
     .fr-container--fluid.co-flex.co-flex--space-between.co-flex--align-items-center.co-flex--wrap.co-flex--gap-05rem.fr-mb-1w
       .co-flex--grow
         - if banners.include?(:environment)
@@ -21,7 +21,7 @@
             toggle_path: toggle_impersonate_mode_admin_users_path
 
       .co-text--right
-        %button{type: "button",
-          data: { action: "visibility-toggle#toggle" },
+        %button{type: :button,
+          data: { action: "visibility#hide" },
           class: "fr-btn fr-btn--tertiary fr-btn--tertiary fr-icon-close-line fr-btn--icon-right fr-btn--sm fr-mx-1w"}
           Cacher

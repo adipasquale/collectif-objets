@@ -20,8 +20,8 @@
           = t("activerecord.attributes.campaign.sender_name")
           %span.fr-hint-text
             C'est ce nom qui sera affiché dans les mails reçus par les communes.
-            Les mails seront toujours envoyés avec l'adresse #{CONTACT_EMAIL}.
-            Les réponses par mail arriveront dans la messagerie et vous recevrez des notifications.
+            Les mails seront envoyés de "[nom émetteur] via Collectif Objets", avec l'adresse de la messagerie.
+            Vous serez notifiés à chaque nouveau message de la commune dans la messagerie.
         = f.text_field :sender_name, placeholder: "Jeanne Dupont"
       .fr-input-group
         = f.label :nom_drac do
