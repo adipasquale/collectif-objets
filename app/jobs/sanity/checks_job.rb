@@ -2,7 +2,7 @@
 
 module Sanity
   class ChecksJob < ApplicationJob
-    EMAIL = "brice.durand@beta.gouv.fr"
+    EMAIL = "goulven.champenois@beta.gouv.fr"
 
     def perform
       check_commune_started_dossier_construction
