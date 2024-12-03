@@ -18,7 +18,9 @@
         = commune_statut_global_badge(commune)
       - if local_assigns[:dossier] && dossier.accepted?
         = dsfr_modal(title: "Êtes-vous sûr de vouloir rouvrir le dossier?",  html_attributes: { id: "modal-dossier-reouverture" }) do |component|
-          %p La réouverture du dossier vous permet de modifier votre examen. Une fois votre examen terminée, n’oubliez pas d’envoyer à la commune le rapport corrigé et de mettre à jour le bordereau de récolement en cliquant sur le bouton « regénérer ».
+          %p
+            La réouverture du dossier vous permet de modifier votre examen.
+            Une fois votre examen terminée, n’oubliez pas d’envoyer à la commune le rapport corrigé et de mettre à jour le ou les bordereaux de récolement.
           - component.with_button do
             = button_to "Oui je veux rouvrir le dossier", conservateurs_dossier_accept_path(dossier), method: :delete, class: "fr-btn"
           - component.with_button do
