@@ -13,7 +13,7 @@
 
   %div{class: ("co-print-hide" if local_assigns[:hide_for_print])}
     .co-flex.co-flex--align-items-center.co-flex--space-between
-      %div.co-flex.co-flex--align-items-center.co-flex--gap-1rem 
+      %div.co-flex.co-flex--align-items-center.co-flex--gap-1rem
         %h1= commune
         = commune_statut_global_badge(commune)
       - if local_assigns[:dossier] && dossier.accepted?
