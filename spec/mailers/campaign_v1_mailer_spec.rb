@@ -46,7 +46,7 @@ end
 RSpec.describe CampaignV1Mailer, type: :mailer do
   let(:departement) { build(:departement, code: "78", nom: "Yvelines", dans_nom: "dans les Yvelines") }
   let!(:commune) { create(:commune_with_user, departement:, nom: "Joinville") }
-  let!(:user) { commune.users.first }
+  let!(:user) { commune.user }
   before { user.update!(email: "jean@mairie.fr") }
   before { travel_to(Time.zone.today.next_week(:monday).to_time + 10.hours) }
   let(:objet) { create(:objet, commune:) }

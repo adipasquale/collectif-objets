@@ -23,7 +23,7 @@ RSpec.describe Synchronizer::Communes::Revision do
       expect(commune.nom).to eq "Ambérieu"
       expect(commune.phone_number).to eq "01 02 03 04 05"
       expect(commune.departement_code).to eq "01"
-      user = commune.users.first
+      user = commune.user
       expect(user.email).to eq "contact@amberieu.fr"
       expect(revision.action_commune).to eq :create
       expect(revision.action_user).to eq :create
@@ -44,7 +44,7 @@ RSpec.describe Synchronizer::Communes::Revision do
       expect(commune.nom).to eq "Ambérieu"
       expect(commune.phone_number).to eq "01 02 03 04 05"
       expect(commune.departement_code).to eq "01"
-      user = commune.users.first
+      user = commune.user
       expect(user.email).to eq "contact@amberieu.fr"
       expect(revision.action_commune).to eq :update
       expect(revision.action_user).to eq :create
@@ -63,7 +63,7 @@ RSpec.describe Synchronizer::Communes::Revision do
     end
 
     before do
-      persisted_commune.users.first.update!(email: "anciencontact@amberieu.fr")
+      persisted_commune.user.update!(email: "anciencontact@amberieu.fr")
     end
 
     it "updates the commune & updates the user email" do
@@ -72,7 +72,7 @@ RSpec.describe Synchronizer::Communes::Revision do
       expect(commune.nom).to eq "Ambérieu"
       expect(commune.phone_number).to eq "01 02 03 04 05"
       expect(commune.departement_code).to eq "01"
-      user = commune.users.first
+      user = commune.user
       expect(user.email).to eq "contact@amberieu.fr"
       expect(revision.action_commune).to eq :update
       expect(revision.action_user).to eq :update_email

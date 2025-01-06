@@ -10,7 +10,7 @@ FactoryBot.define do
     created_at { 1.day.ago }
 
     trait :from_commune do
-      author { commune.users.first }
+      author { commune.user }
     end
   end
 end

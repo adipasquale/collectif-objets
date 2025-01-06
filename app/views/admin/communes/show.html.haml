@@ -17,7 +17,7 @@
             %br
             et terminé le #{l(@commune.completed_at, format: :long_with_weekday)}
 
-      - user = @commune.users.first
+      - user = @commune.user
       - if user.nil?
         %p Aucun usager
         %p

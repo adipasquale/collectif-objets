@@ -39,7 +39,7 @@ module CampaignRecipientsControllerConcern
     @recipient = CampaignRecipient.includes(:campaign, :commune).find(params[:id] || params[:recipient_id])
     @commune = @recipient.commune
     @campaign = @recipient.campaign
-    @user = @commune.users.first
+    @user = @commune.user
   end
 
   def validate_mail_preview_params

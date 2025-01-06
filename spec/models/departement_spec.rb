@@ -87,13 +87,13 @@ describe Departement, type: :model do
     context "quand des communes ont écrit des messages" do
       it "indique le nombre de messages par nom de commune" do
         # Message trop ancien
-        create(:message, commune:, author: commune.users.first, created_at: date_range.first - 1.day)
+        create(:message, commune:, author: commune.user, created_at: date_range.first - 1.day)
         # Message d'une commune hors département
-        create(:message, commune: commune_autre_departement, author: commune_autre_departement.users.first,
+        create(:message, commune: commune_autre_departement, author: commune_autre_departement.user,
                          created_at: date_range.first + 1.day)
         # Messages attendus
-        create(:message, commune:, author: commune.users.first, created_at: date_range.first + 1.hour)
-        create(:message, commune: commune2, author: commune2.users.first, created_at: date_range.last - 1.hour)
+        create(:message, commune:, author: commune.user, created_at: date_range.first + 1.hour)
+        create(:message, commune: commune2, author: commune2.user, created_at: date_range.last - 1.hour)
         expect(commune_messages_count).to eq({ commune => 1, commune2 => 1 })
       end
     end

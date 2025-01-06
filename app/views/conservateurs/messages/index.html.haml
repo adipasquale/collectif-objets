@@ -19,6 +19,6 @@
     - if sp_prefix = @commune.departement.service_public_prefix
       .fr-mb-1w
         = link_to "Mairie de #{@commune} sur service-public.fr", "https://lannuaire.service-public.fr/#{sp_prefix}/mairie-#{@commune.code_insee}-01", class: "fr-link fr-icon-information-line fr-link--icon-left", target: "_blank", rel: "noopener"
-    - if email = @commune.users.first&.email
+    - if email = @commune.user&.email
       .fr-mb-1w
         = link_to email, "mailto:#{email}", class: "fr-link fr-icon-mail-line fr-link--icon-left"

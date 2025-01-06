@@ -11,7 +11,7 @@ class CampaignV1MailerPreview < ApplicationMailerPreview
   private
 
   def user
-    @user ||= commune.users.first
+    @user ||= commune.user
   end
 
   def commune

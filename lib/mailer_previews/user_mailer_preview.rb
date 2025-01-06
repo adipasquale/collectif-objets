@@ -37,7 +37,7 @@ class UserMailerPreview < ApplicationMailerPreview
 
   def message_received
     message = Message.from_conservateur.first
-    user = message.commune.users.first
+    user = message.commune.user
     UserMailer.with(message:, user:).message_received_email
   end
 

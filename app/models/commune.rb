@@ -185,6 +185,8 @@ class Commune < ApplicationRecord
     "#{nom} (#{code_insee})"
   end
 
+  def user = users.first
+
   def highlighted_objet
     # used in campaigns
     Objet.select_best_objet_in_list(objets.where.not(palissy_TICO: nil).to_a)

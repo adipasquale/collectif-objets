@@ -10,7 +10,7 @@
       %p
         En cliquant sur ce bouton, vous désinscrirez la commune
         = @recipient.commune.nom
-        = "(#{ @recipient.commune.users.first.email })"
+        = "(#{ @recipient.commune.user.email })"
         de tous les prochains emails de la part de Collectif Objets au sujet de la campagne de campagne de recensement
         = @campaign.departement.dans_nom
         du

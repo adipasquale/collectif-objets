@@ -5,7 +5,7 @@ class AddUserIdToRecensements < ActiveRecord::Migration[7.0]
       .where(user_id: nil)
       .includes(objet: { commune: [:users]})
       .find_each do |recensement|
-        user = recensement.commune.users.first
+        user = recensement.commune.user
         raise "missing user for recensement #{recensement.id} on objet #{recensement.objet.ref_pop}, commune #{recensement.commune.nom} (#{recensement.commune.code_insee})" if user.nil?
 
         recensement.update_columns(user_id: user.id)

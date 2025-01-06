@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Communes::RecensementsController, type: :request do
   let(:commune) { create(:commune, :with_user) }
   let(:objet) { create(:objet, commune:) }
-  let(:user) { commune.users.first }
+  let(:user) { commune.user }
   let(:params) { {} }
 
   before(:each) { login_as(user, scope: :user) }

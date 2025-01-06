@@ -5,5 +5,5 @@
   .fr-input-group
     = f.submit "Prévisualiser le mail", name: nil, class: "fr-hidden"
 
-- mail = CampaignV1Mailer.with(user: recipient.commune.users.first, commune: recipient.commune, campaign:).lancement_email
+- mail = CampaignV1Mailer.with(user: recipient.commune.user, commune: recipient.commune, campaign:).lancement_email
 = render Conservateurs::MailIframeComponent.new mail:, display_headers: false, fit: true

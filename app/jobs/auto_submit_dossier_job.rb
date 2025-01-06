@@ -15,6 +15,6 @@ class AutoSubmitDossierJob < ApplicationJob
   delegate :commune, to: :dossier
 
   def user
-    dossier.commune.users.first
+    dossier.commune.user
   end
 end

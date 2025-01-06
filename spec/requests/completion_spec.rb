@@ -7,7 +7,7 @@ RSpec.describe Communes::CompletionsController, type: :request do
   let(:objet) { create(:objet, commune:) }
   let(:recensement) { create(:recensement, objet:) }
   let(:dossier) { commune.dossier }
-  let(:user) { commune.users.first }
+  let(:user) { commune.user }
 
   before(:each) { login_as(user, scope: :user) }
 
