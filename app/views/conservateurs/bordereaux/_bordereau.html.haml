@@ -1,7 +1,8 @@
 -# locals: bordereau:, commune:
 
-- icon = bordereau.new_record? ? "fr-icon-question-line" : "fr-icon-checkbox-fill"
-- state = bordereau.new_record? ? "À examiner" : "Généré"
+- generated = bordereau.file.attached?
+- icon = generated ? "fr-icon-checkbox-fill" : "fr-icon-question-line"
+- state = generated ? "Généré" : "À examiner"
 - objets_count = Objet.human_attribute_name(:proteges_count, count: bordereau.bordereau_recensements.load.size)
 - id = "bordereau_#{bordereau.edifice_id}"
 
@@ -15,19 +16,19 @@
       %span.fr-sr-only= state
       = "#{bordereau.nom_edifice} · #{objets_count}"
   .fr-collapse{ id: "#{id}-panel" }
-    - if bordereau.new_record?
+    - if generated
+      - size = number_to_human_size(bordereau.file.byte_size)
+      = link_to "Télécharger le bordereau (PDF de #{size})",
+        rails_blob_path(bordereau.file, disposition: "attachment"),
+        class: "fr-btn fr-btn--sm fr-btn--primary fr-btn--icon-left fr-icon-download-line fr-mb-2w",
+        title: "Bordereau de récolement · #{bordereau.nom_edifice} #{commune.nom} (PDF de #{size})"
+    - else
       = button_to "Générer le bordereau",
         conservateurs_commune_bordereaux_path(commune, edifice_id: bordereau.edifice_id),
         method: :post,
         data: { turbo_submits_with: "Génération en cours…" },
         class: "fr-btn fr-btn--sm fr-btn--secondary fr-btn--icon-left fr-icon-file-add-line fr-mb-2w",
         title: "Générer le bordereau de #{bordereau.nom_edifice}"
-    - else
-      - size = number_to_human_size(bordereau.file.byte_size)
-      = link_to "Télécharger le bordereau (PDF de #{size})",
-        rails_blob_path(bordereau.file, disposition: "attachment"),
-        class: "fr-btn fr-btn--sm fr-btn--primary fr-btn--icon-left fr-icon-download-line fr-mb-2w",
-        title: "Bordereau de récolement · #{bordereau.nom_edifice} #{commune.nom} (PDF de #{size})"
 
     = form_for bordereau, url: conservateurs_commune_bordereaux_path(commune, edifice_id: bordereau.edifice_id), method: :post, builder: FormBuilderDsfr, data: { controller: :form, action: "keydown->form#controlSubmit" } do |f|
       = f.fields_for :bordereau_recensements, include_id: false do |ff|
