@@ -8,7 +8,7 @@ ruby "3.3.4"
 gem "aasm", "~> 5.5"
 gem "actionmailer-html2text", "~> 0.2.0"
 gem "active_model_validates_intersection_of", "~> 3.0"
-gem "active_storage_validations", "~> 1.1"
+gem "active_storage_validations", "~> 2.0"
 gem "after_commit_everywhere", "~> 1.3"
 gem "aws-sdk-s3", "~> 1.143", require: false
 gem "bootsnap", "~> 1.18", require: false
