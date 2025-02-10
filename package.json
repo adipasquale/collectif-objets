@@ -33,7 +33,7 @@
     "throttle-debounce": "^5.0.0"
   },
   "devDependencies": {
-    "vite": "^4.5.5",
+    "vite": "^4.5.9",
     "vite-plugin-ruby": "^3.2.2",
     "vite-plugin-stimulus-hmr": "^3.0.0"
   }
