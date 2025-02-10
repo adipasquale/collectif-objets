@@ -10,7 +10,7 @@ module RecensementWizard
 
     validates(
       :photos,
-      content_type: %w[image/jpg image/jpeg image/png],
+      content_type: %w[image/jpeg image/png],
       size: { less_than: 20.megabytes }
     )
 
